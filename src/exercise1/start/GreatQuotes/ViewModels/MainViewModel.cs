@@ -3,10 +3,12 @@ using System.Collections.ObjectModel;
 
 namespace GreatQuotes.ViewModels {
     public class MainViewModel : BaseViewModel {
-        readonly Action saveQuotes;
 
-        public MainViewModel(Action save) {
-            saveQuotes = save;
+        private readonly QuoteManager quoteManager;
+        public MainViewModel() {
+
+            quoteManager = QuoteManager.Instance;
+            Quotes = quoteManager.Quotes as ObservableCollection<GreatQuoteViewModel>;
         }
 
         public ObservableCollection<GreatQuoteViewModel> Quotes { get; set; }
@@ -14,7 +16,7 @@ namespace GreatQuotes.ViewModels {
         public GreatQuoteViewModel ItemSelected { get; set; }
 
         public void SaveQuotes() {
-            saveQuotes?.Invoke();
+            quoteManager.Save();
         }
     }
 }
